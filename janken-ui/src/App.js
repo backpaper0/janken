@@ -42,7 +42,7 @@ export default () => {
   return (
     <div className='root'>
       <p>じゃんけん……</p>
-      <p className={false}>
+      <p>
         <HandButton phase={phase} janken={janken} hand={'GU'}/>
         <HandButton phase={phase} janken={janken} hand={'CHOKI'}/>
         <HandButton phase={phase} janken={janken} hand={'PA'}/>
