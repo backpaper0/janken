@@ -34,11 +34,11 @@ update msg model =
 view : Model -> Html Msg
 view { phase, player, enemy, issue } =
     let
-        handText hand =
-            Emojis.hands |> Dict.get (handToString hand) |> Maybe.withDefault "" |> text
+        handText =
+            Emojis.handToEmoji >> text
 
         issueText =
-            Emojis.issues |> Dict.get (issueToString issue) |> Maybe.withDefault "" |> text
+            Emojis.issueToEmoji >> text
 
         handButton hand =
             button [ disabled (phase /= Init), onClick (Janken hand) ] [ handText hand ]
@@ -64,7 +64,7 @@ view { phase, player, enemy, issue } =
                 (phase /= Finished |> hidden)
                 [ p [ class "hand" ] [ text "あなたは", span [] [ handText player ] ]
                 , p [ class "hand" ] [ text "相手は", span [] [ handText enemy ] ]
-                , p [ class "issue" ] [ issueText ]
+                , p [ class "issue" ] [ issueText issue ]
                 ]
             ]
 

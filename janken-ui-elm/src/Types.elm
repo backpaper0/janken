@@ -48,19 +48,6 @@ type Issue
     | Lose
 
 
-issueToString : Issue -> String
-issueToString issue =
-    case issue of
-        Win ->
-            "WIN"
-
-        Draw ->
-            "DRAW"
-
-        Lose ->
-            "LOSE"
-
-
 stringToIssue : String -> Issue
 stringToIssue string =
     case string of

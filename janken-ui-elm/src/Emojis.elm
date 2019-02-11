@@ -1,12 +1,29 @@
 module Emojis exposing (..)
 
-import Dict exposing (..)
-
-hands : Dict String String
-hands =
-    fromList [("GU", "\u{270A}"), ("CHOKI", "\u{270C}"), ("PA", "\u{270B}")]
+import Types exposing (Hand(..), Issue(..))
 
 
-issues : Dict String String
-issues =
-    fromList [("WIN", "\u{1F604}勝ち"), ("DRAW", "\u{1F914}あいこ"), ("LOSE", "\u{1F623}負け")]
+handToEmoji : Hand -> String
+handToEmoji hand =
+    case hand of
+        Gu ->
+            "\u{270A}"
+
+        Choki ->
+            "\u{270C}"
+
+        Pa ->
+            "\u{270B}"
+
+
+issueToEmoji : Issue -> String
+issueToEmoji issue =
+    case issue of
+        Win ->
+            "\u{1F604}勝ち"
+
+        Draw ->
+            "\u{1F914}あいこ"
+
+        Lose ->
+            "\u{1F623}負け"
