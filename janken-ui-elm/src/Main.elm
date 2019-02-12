@@ -12,7 +12,7 @@ import Apis
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model Init Gu Gu Draw, Cmd.none )
+    ( Model Init False Gu Gu Draw, Cmd.none )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -27,12 +27,9 @@ update msg model =
         Finish nextModel ->
             ( nextModel, Cmd.none )
 
-        Nop ->
-            ( model, Cmd.none )
-
 
 view : Model -> Html Msg
-view { phase, player, enemy, issue } =
+view { phase, error, player, enemy, issue } =
     let
         handText =
             Emojis.handToEmoji >> text
@@ -61,10 +58,14 @@ view { phase, player, enemy, issue } =
                 (phase == Init |> hidden)
                 [ text "ぽん！" ]
             , div
-                (phase /= Finished |> hidden)
+                (phase /= Finished || error |> hidden)
                 [ p [ class "hand" ] [ text "あなたは", span [] [ handText player ] ]
                 , p [ class "hand" ] [ text "相手は", span [] [ handText enemy ] ]
                 , p [ class "issue" ] [ issueText issue ]
+                ]
+            , div
+                (phase /= Finished || (not error) |> hidden)
+                [ p [ class "error" ] [ text "通信エラー", text Emojis.errorIcon ]
                 ]
             ]
 

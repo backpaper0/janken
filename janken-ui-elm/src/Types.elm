@@ -65,11 +65,10 @@ stringToIssue string =
 
 
 type alias Model =
-    { phase : Phase, player : Hand, enemy : Hand, issue : Issue }
+    { phase : Phase, error : Bool, player : Hand, enemy : Hand, issue : Issue }
 
 
 type Msg
     = Janken Hand
     | Reset
     | Finish Model
-    | Nop

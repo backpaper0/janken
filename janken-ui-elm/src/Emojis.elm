@@ -27,3 +27,7 @@ issueToEmoji issue =
 
         Lose ->
             "\u{1F623}負け"
+
+
+errorIcon : String
+errorIcon = "\u{1F631}"

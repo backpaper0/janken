@@ -13,7 +13,7 @@ postJanken hand =
             Encode.object [ ( "player", player |> handToString |> Encode.string ) ]
 
         jankenDecoder =
-            Decode.map3 (Model Finished)
+            Decode.map3 (Model Finished False)
                 (Decode.field "player" (Decode.string |> Decode.map stringToHand))
                 (Decode.field "enemy" (Decode.string |> Decode.map stringToHand))
                 (Decode.field "issue" (Decode.string |> Decode.map stringToIssue))
@@ -24,7 +24,7 @@ postJanken hand =
                     Finish model
 
                 Err _ ->
-                    Nop
+                    Finish (Model Finished True Gu Gu Draw)
     in
         Http.post
             { url = "/api/janken"
