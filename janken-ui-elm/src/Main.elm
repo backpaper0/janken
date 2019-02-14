@@ -41,10 +41,7 @@ view { phase, error, player, enemy, issue } =
             button [ disabled (phase /= Init), onClick (Janken hand) ] [ handText hand ]
 
         hidden cond =
-            if cond then
-                [ class "hidden" ]
-            else
-                []
+            [ classList [ ( "hidden", cond ) ] ]
     in
         div [ class "root" ]
             [ p [] [ text "じゃんけん……" ]
