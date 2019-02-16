@@ -26,3 +26,15 @@ SPRING_PROFILES_ACTIVE=mock mvn spring-boot:run
 
 `WIN`, `DRAW`, `LOSE` and exception are repeated.
 
+## Containerized
+
+```
+mvn compile jib:build
+```
+
+or
+
+```
+mvn compile jib:dockerBuild
+```
+
