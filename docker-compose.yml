@@ -8,3 +8,4 @@ services:
   ui:
     image: backpaper0/janken-ui
     ports: ["3000:80"]
+    depends_on: ["api"]
