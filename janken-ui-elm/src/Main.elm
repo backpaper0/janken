@@ -68,8 +68,8 @@ view { phase, error, player, enemy, issue } =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
+subscriptions =
+    always Sub.none
 
 
 main =
