@@ -26,20 +26,20 @@ handToString hand =
             "PA"
 
 
-stringToHand : String -> Hand
+stringToHand : String -> Maybe Hand
 stringToHand string =
     case string of
         "GU" ->
-            Gu
+            Just Gu
 
         "CHOKI" ->
-            Choki
+            Just Choki
 
         "PA" ->
-            Pa
+            Just Pa
 
         _ ->
-            Gu
+            Nothing
 
 
 type Issue
@@ -48,20 +48,20 @@ type Issue
     | Lose
 
 
-stringToIssue : String -> Issue
+stringToIssue : String -> Maybe Issue
 stringToIssue string =
     case string of
         "WIN" ->
-            Win
+            Just Win
 
         "DRAW" ->
-            Draw
+            Just Draw
 
         "LOSE" ->
-            Lose
+            Just Lose
 
         _ ->
-            Win
+            Nothing
 
 
 type alias Model =

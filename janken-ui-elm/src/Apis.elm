@@ -12,18 +12,21 @@ postJanken hand =
         jankenEncoder player =
             Encode.object [ ( "player", player |> handToString |> Encode.string ) ]
 
+        mapper a b c =
+            ( a, b, c )
+
         jankenDecoder =
-            Decode.map3 (Model Finished False)
+            Decode.map3 mapper
                 (Decode.field "player" (Decode.string |> Decode.map stringToHand))
                 (Decode.field "enemy" (Decode.string |> Decode.map stringToHand))
                 (Decode.field "issue" (Decode.string |> Decode.map stringToIssue))
 
         resultToMsg result =
             case result of
-                Ok model ->
-                    Finish model
+                Ok ( Just player, Just enemy, Just issue ) ->
+                    Finish (Model Finished False player enemy issue)
 
-                Err _ ->
+                _ ->
                     Finish (Model Finished True Gu Gu Draw)
     in
         Http.post
