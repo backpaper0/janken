@@ -18,15 +18,15 @@ const INIT = Symbol('INIT');
 const STARTED = Symbol('STARTED');
 const FINISHED = Symbol('FINISHED');
 
-export default () => {
+export default class App extends React.Component {
 
-  const [phase, setPhase] = useState(INIT);
-  const [player, setPlayer] = useState('GU');
-  const [enemy, setEnemy] = useState('GU');
-  const [issue, setIssue] = useState('DRAW');
-  const [error, setError] = useState(false);
+  componentDidMount() {
+    const { setPhase } = this.props;
+    setPhase(INIT);
+  }
 
-  const janken = async hand => {
+  async janken(hand) {
+    const { setPhase, setPlayer, setEnemy, setIssue, setError } = this.props;
     setPhase(STARTED);
     const headers = { 'Content-Type': 'application/json' };
     const body = JSON.stringify({ player: hand });
@@ -41,49 +41,60 @@ export default () => {
       setPhase(FINISHED);
       setError(true);
     }
-  };
+  }
 
-  const reset = () => {
+  reset() {
+    const { setPhase, setError } = this.props;
     setPhase(INIT);
     setError(false);
-  };
+  }
 
-  return (
-    <div className='root'>
-      <p>じゃんけん……</p>
-      <p>
-        <HandButton phase={phase} janken={janken} hand={'GU'}/>
-        <HandButton phase={phase} janken={janken} hand={'CHOKI'}/>
-        <HandButton phase={phase} janken={janken} hand={'PA'}/>
-        <button className='reset-button' disabled={phase !== FINISHED} onClick={() => reset()}>もう一回</button>
-      </p>
-      <p className={phase === INIT ? 'hidden' : ''}>ぽん！</p>
-      <div className={phase !== FINISHED || error ? 'hidden' : ''}>
-        <p className='hand'>
-          あなたは
-          <span>{hands[player]}</span>
+  render() {
+    const { phase, player, enemy, issue, error } = this.props;
+    const janken = this.janken.bind(this);
+    const reset = this.reset.bind(this);
+    return (
+      <div className='root'>
+        <p>じゃんけん……</p>
+        <p>
+          <HandButton phase={phase} janken={janken} hand={'GU'}/>
+          <HandButton phase={phase} janken={janken} hand={'CHOKI'}/>
+          <HandButton phase={phase} janken={janken} hand={'PA'}/>
+          <button className='reset-button' disabled={phase !== FINISHED} onClick={() => reset()}>もう一回</button>
         </p>
-        <p className='hand'>
-          相手は
-          <span>{hands[enemy]}</span>
-        </p>
-        <p className='issue'>
-          {issues[issue]}
-        </p>
+        <p className={phase === INIT ? 'hidden' : ''}>ぽん！</p>
+        <div className={phase !== FINISHED || error ? 'hidden' : ''}>
+          <p className='hand'>
+            あなたは
+            <span>{hands[player]}</span>
+          </p>
+          <p className='hand'>
+            相手は
+            <span>{hands[enemy]}</span>
+          </p>
+          <p className='issue'>
+            {issues[issue]}
+          </p>
+        </div>
+        <div className={phase !== FINISHED || error === false ? 'hidden' : ''}>
+          <p className='error'>
+            通信エラー
+            {errorIcon}
+          </p>
+        </div>
       </div>
-      <div className={phase !== FINISHED || error === false ? 'hidden' : ''}>
-        <p className='error'>
-          通信エラー
-          {errorIcon}
-        </p>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-const HandButton = ({ phase, janken, hand }) => (
-  <button className='hand-button' disabled={phase !== INIT} onClick={() => janken(hand)}>
-    {hands[hand]}
-  </button>
-);
+class HandButton extends React.Component {
+  render() {
+    const { phase, janken, hand } = this.props;
+    return (
+      <button className='hand-button' disabled={phase !== INIT} onClick={() => janken(hand)}>
+        {hands[hand]}
+      </button>
+    );
+  }
+}
 
