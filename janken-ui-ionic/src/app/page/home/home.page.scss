@@ -1,0 +1,36 @@
+.root {
+    text-align: center;
+}
+
+.hand-button {
+    border: thin solid gray;
+    border-radius: 10px;
+    font-size: x-large;
+    margin: 5px;
+}
+
+.reset-button {
+    border: thin solid gray;
+    border-radius: 10px;
+    font-size: large;
+    margin: 5px;
+}
+
+.hand-button:disabled,
+.reset-button:disabled {
+    opacity: 0.5;
+}
+
+.hand {
+    font-size: x-large;
+}
+
+.issue {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.error {
+    font-size: xx-large;
+    font-weight: bold;
+}

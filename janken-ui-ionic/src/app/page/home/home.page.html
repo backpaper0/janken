@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      じゃんけん
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="root">
+  <p>じゃんけん……</p>
+  <p>
+    <ion-button class="hand-button" [disabled]="isDisabledHandButton" (click)="onClickHandButton('GU')">{{'GU' | hand }}</ion-button>
+    <ion-button class="hand-button" [disabled]="isDisabledHandButton" (click)="onClickHandButton('CHOKI')">{{'CHOKI' | hand}}</ion-button>
+    <ion-button class="hand-button" [disabled]="isDisabledHandButton" (click)="onClickHandButton('PA')">{{'PA' | hand}}</ion-button>
+    <ion-button class="reset-button" [disabled]="isDisabledResetButton" (click)="onClickResetButton()">もう一回</ion-button>
+  </p>
+  <p *ngIf="isVisiblePon">ぽん！</p>
+  <div *ngIf="hasResult">
+    <p class='hand'>
+      あなたは
+      <span>{{playerHand | hand}}</span>
+    </p>
+    <p class='hand'>
+      相手は
+      <span>{{enemyHand | hand}}</span>
+    </p>
+    <p class='issue'>
+        {{issue | issue}}
+    </p>
+  </div>
+  <div *ngIf="hasError">
+    <p class='error'>
+      通信エラー
+      {{errorIcon}}
+    </p>
+  </div>
+</ion-content>
