@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
 
-const hands = {
+interface Hands {
+	[key: string]: string;
+}
+
+interface Issues {
+	[key: string]: string;
+}
+
+const hands: Hands = {
   GU: '✊',
   CHOKI: '✌️',
   PA: '🖐'
 };
 
-const issues = {
+const issues: Issues = {
   WIN: '😄勝ち',
   DRAW: '🤔あいこ',
   LOSE: '😣負け'
 };
 
-const errorIcon = '😱';
+const errorIcon: string = '😱';
 
-const INIT = Symbol('INIT');
-const STARTED = Symbol('STARTED');
-const FINISHED = Symbol('FINISHED');
+const INIT: Symbol = Symbol('INIT');
+const STARTED: Symbol = Symbol('STARTED');
+const FINISHED: Symbol = Symbol('FINISHED');
 
 export default () => {
 
-  const [phase, setPhase] = useState(INIT);
-  const [player, setPlayer] = useState('GU');
-  const [enemy, setEnemy] = useState('GU');
-  const [issue, setIssue] = useState('DRAW');
-  const [error, setError] = useState(false);
+  const [phase, setPhase] = useState<Symbol>(INIT);
+  const [player, setPlayer] = useState<string>('GU');
+  const [enemy, setEnemy] = useState<string>('GU');
+  const [issue, setIssue] = useState<string>('DRAW');
+  const [error, setError] = useState<boolean>(false);
 
-  const janken = async hand => {
+  const janken: (hand: string) => Promise<void> = async hand => {
     setPhase(STARTED);
     const headers = { 'Content-Type': 'application/json' };
     const body = JSON.stringify({ player: hand });
@@ -43,7 +51,7 @@ export default () => {
     }
   };
 
-  const reset = () => {
+  const reset: () => void = () => {
     setPhase(INIT);
     setError(false);
   };
@@ -81,7 +89,13 @@ export default () => {
   );
 };
 
-const HandButton = ({ phase, janken, hand }) => (
+interface HandButtonArgs {
+	phase: Symbol;
+	janken: (hand: string) => Promise<void>;
+	hand: string;
+}
+
+const HandButton = ({ phase, janken, hand }: HandButtonArgs) => (
   <button className='hand-button' disabled={phase !== INIT} onClick={() => janken(hand)}>
     {hands[hand]}
   </button>
