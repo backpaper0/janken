@@ -42,8 +42,6 @@ java -jar target/janken-api.jar --spring.profiles.active=mock
 
 ## Containerized
 
-Build container image via [Buildpacks](https://buildpacks.io/).
-
 ```
-pack build janken-api --builder cloudfoundry/cnb:bionic
+mvn spring-boot:build-image
 ```
